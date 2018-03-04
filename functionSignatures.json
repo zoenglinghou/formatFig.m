@@ -1,0 +1,108 @@
+{
+    "formatFig":
+    {
+        "inputs": [
+        {
+            "name": "fig",
+            "kind": "required",
+            "type": "matlab.ui.Figure"
+        },
+        {
+            "name": "fileName",
+            "kind": "required",
+            "type": [
+                ["filepath"],
+                ["char"]
+            ]
+        },
+        {
+            "name": "orientation",
+            "kind": "namevalue",
+            "type": "choices={'image', 'landscape', 'portrait'}"
+        },
+        {
+            "name": "imageSize",
+            "kind": "namevalue",
+            "type": ["numeric", "numel=2"]
+        },
+        {
+            "name": "axisLocation",
+            "kind": "namevalue",
+            "type": ["char", "choices={'default', 'origin'}"]
+        },
+        {
+            "name": "XAxisLocation",
+            "kind": "namevalue",
+            "type": ["char", "choices={'bottom', 'origin', 'top'}"]
+        },
+        {
+            "name": "YAxisLocation",
+            "kind": "namevalue",
+            "type": ["char", "choices={'left', 'origin', 'right'}"]
+        },
+        {
+            "name": "axisScale",
+            "kind": "namevalue",
+            "type": ["char", "choices={'linear', 'semilogx', 'semilogy', 'loglog', 'default'}"]
+        },
+        {
+            "name": "XLabel",
+            "kind": "namevalue",
+            "type": [
+                ["char"],
+                ["cell"],
+                ["cellstr"]
+            ]
+        },
+        {
+            "name": "YLabel",
+            "kind": "namevalue",
+            "type": [
+                ["char"],
+                ["cell"],
+                ["cellstr"]
+            ]
+        },
+        {
+            "name": "YLabelLeft",
+            "kind": "namevalue",
+            "type": [
+                ["char"],
+                ["cell"],
+                ["cellstr"]
+            ]
+        },
+        {
+            "name": "YLabelRight",
+            "kind": "namevalue",
+            "type": [
+                ["char"],
+                ["cell"],
+                ["cellstr"]
+            ]
+        },
+        {
+            "name": "tickNum",
+            "kind": "namevalue",
+            "type": ["numeric", "isinteger", ">=2", "numel=1"]
+        },
+        {
+            "name": "legends",
+            "kind": "namevalue",
+            "type": [
+                ["cell"],
+                ["cellstr"]
+            ]
+        },
+        {
+            "name": "fontSize",
+            "kind": "namevalue",
+            "type": ["numeric", "isinteger", "numel=1"]
+        },
+        {
+            "name": "fontName",
+            "kind": "namevalue",
+            "type": ["choices=listfonts"]
+        }]
+    }
+}
