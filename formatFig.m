@@ -184,19 +184,46 @@ end
 if ~useDefault('axisScale', p)
 	[xScale, yScale, xTick, yTick] = cellfun(...
 		@(axisScale, Lx, Ly) genScaleTick(axisScale, Lx, Ly, tickNum),...
-		axisScale, Lx, Ly, 'UniformOutput', 0 ...
+		axisScale, Lx, Ly, 'uni', 0 ...
 	);
 
-	% Set ticks & font size
-	cellfun(...
-        @(ax, xTick, yTick, xScale, yScale) set(...
+    % Set scales
+    cellfun(...
+        @(ax, xScale, yScale) set(...
             ax,...
-            'XTick', xTick, 'YTick', yTick,...
-		    'XScale', xScale, 'YScale', yScale...
+            'XScale', xScale, 'YScale', yScale...
         ),...
-		ax, xTick, yTick, xScale, yScale...
+        ax, xScale, yScale...
     );
+
+	% Set ticks
+    for ax_idx = 1: length(ax)
+        if ~isempty(xTick{ax_idx})
+            set(ax{ax_idx}, 'XTick', cell2mat(xTick(ax_idx)));
+        end
+        if ~isempty(yTick{ax_idx})
+            set(ax{ax_idx}, 'YTick', cell2mat(yTick(ax_idx)));
+        end
+    end
 end
+
+% Increase line width and marker size
+lines = findall(fig, 'Type', 'line');
+if ~isempty(lines)
+    if any([lines.LineWidth] == 0.5)
+        arrayfun(@(lines) set(lines, 'LineWidth', lines.LineWidth .* 2), lines);
+    end
+    if any([lines.MarkerSize] == 6)
+        arrayfun(@(lines) set(lines, 'MarkerSize', lines.MarkerSize .* 1.5), lines);
+    end
+end
+
+% Font type and size for axes
+cellfun(@(ax) set(ax, 'FontSize', fontSize, 'FontName', fontName), ax);
+
+% Font for all texts
+text = findall(fig, 'Type', 'text');
+arrayfun(@(text) set(text, 'FontSize', fontSize, 'FontName', fontName), text);
 
 % Legend
 if ~useDefault('legends', p)
@@ -214,13 +241,6 @@ if ~useDefault('legends', p)
         error('Legends should have the same number as axes.');
     end
 end
-
-% Font type and size for axes
-cellfun(@(ax) set(ax, 'FontSize', fontSize, 'FontName', fontName), ax);
-
-% Font for all texts
-text = findall(fig, 'Type', 'text');
-arrayfun(@(text) set(text, 'FontSize', fontSize, 'FontName', fontName), text);
 
 % Paper Size
 switch orientation
@@ -278,34 +298,18 @@ function [xScale, yScale, xTick, yTick] = genScaleTick (axisScale, Lx, Ly, tickN
 		case 'semilogx'
 			xScale = 'log';
 			yScale = 'linear';
-            xTick = logspace(...
-				floor(log10(abs(Lx(1))) * abs(Lx(1)) / Lx(1)),...
-				ceil(log10(abs(Lx(2)))  * abs(Lx(2)) / Lx(2)),...
-				getLogNum(Lx, tickNum)...
-			);
+            xTick = [];
 			yTick = linspace(Ly(1), Ly(2), tickNum);
 		case 'semilogy'
 			xScale = 'linear';
 			yScale = 'log';
 			xTick = linspace(Lx(1), Lx(2), tickNum);
-            yTick = logspace(...
-				floor(log10(abs(Ly(1))) * abs(Ly(1)) / Ly(1)),...
-				ceil(log10(abs(Ly(2))) * abs(Ly(2)) / Ly(2)),...
-				getLogNum(Ly, tickNum)...
-			);
+            yTick = [];
 		case 'loglog'
 			xScale = 'log';
 			yScale = 'log';
-			xTick = logspace(...
-				floor(log10(abs(Lx(1))) * abs(Lx(1)) / Lx(1)),...
-				ceil(log10(abs(Lx(2)))  * abs(Lx(2)) / Lx(2)),...
-				getLogNum(Lx, tickNum)...
-			);
-			yTick = logspace(...
-				floor(log10(abs(Ly(1))) * abs(Ly(1)) / Ly(1)),...
-				ceil(log10(abs(Ly(2))) * abs(Ly(2)) / Ly(2)),...
-				getLogNum(Ly, tickNum)...
-			);
+            xTick = [];
+            yTick = [];
 		case 'linear'
 			xScale = 'linear';
 			yScale = 'linear';
