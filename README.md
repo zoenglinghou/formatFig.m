@@ -5,7 +5,7 @@
 ## Installation
 In shell, clone the repository to a folder of your choice:
 ```bash
-    git clone https://github.com/CarlosEvo/formatFig.m.git FOLDERNAME
+    git clone https://github.com/CanonyEvo/formatFig.m.git FOLDERNAME
 ```
 
 In Matlab, add the folder to your path:
